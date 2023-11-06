@@ -50,7 +50,7 @@ public readonly struct MultiString
         var jp = ParseSeStringLumina(gameData.GetExcelSheet<Lumina.Excel.GeneratedSheets.Item>(ClientLanguage.Japanese)!.GetRow(id)?.Name);
         return new MultiString(en, de, fr, jp);
     }
-
+    // 标记：汉化需要修改
     private string Name(ClientLanguage lang)
         => lang switch
         {
@@ -58,7 +58,7 @@ public readonly struct MultiString
             ClientLanguage.German   => German,
             ClientLanguage.Japanese => Japanese,
             ClientLanguage.French   => French,
-            _                       => throw new ArgumentException(),
+            _                       => English,
         };
 
     public static readonly MultiString Empty = new(string.Empty, string.Empty, string.Empty, string.Empty);

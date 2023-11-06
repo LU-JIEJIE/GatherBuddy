@@ -42,38 +42,41 @@
   <ItemGroup>
     <PackageReference Include="DalamudPackager" Version="2.1.10" />
     <PackageReference Include="Dalamud.ContextMenu" Version="1.2.3" />
-    <Reference Include="Dalamud">
-			<HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
-      <Private>False</Private>
-		</Reference>
-		<Reference Include="ImGui.NET">
-			<HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
-      <Private>False</Private>
-		</Reference>
-		<Reference Include="ImGuiScene">
-			<HintPath>$(DalamudLibPath)ImGuiScene.dll</HintPath>
-      <Private>False</Private>
-		</Reference>
-    <Reference Include="Lumina">
-			<HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
-      <Private>False</Private>
-		</Reference>
-    <Reference Include="Lumina.Excel">
-			<HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
-      <Private>False</Private>
-		</Reference>
-    <Reference Include="FFXIVClientStructs">
-      <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\GatherBuddy.GameData\GatherBuddy.GameData.csproj" />
 	  <ProjectReference Include="..\OtterGui\OtterGui.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Dalamud">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\Dalamud.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	  <Reference Include="FFXIVClientStructs">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	  <Reference Include="ImGui.NET">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\ImGui.NET.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	  <Reference Include="ImGuiScene">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\ImGuiScene.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	  <Reference Include="Lumina">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\Lumina.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	  <Reference Include="Lumina.Excel">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\Lumina.Excel.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	  <Reference Include="Newtonsoft.Json">
+	    <HintPath>..\..\..\Software\Dalamud.Updater\addon\Hooks\dev\Newtonsoft.Json.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
 	</ItemGroup>
 </Project>

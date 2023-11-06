@@ -57,19 +57,19 @@ public partial class Interface
             }
         }
 
-        private static readonly NameColumn        _nameColumn        = new() { Label = "Item Name..." };
-        private static readonly NextUptimeColumn  _nextUptimeColumn  = new() { Label = "Next Uptime" };
-        private static readonly AetheryteColumn   _aetheryteColumn   = new() { Label = "Aetheryte" };
-        private static readonly LevelColumn       _levelColumn       = new() { Label = "Lvl..." };
-        private static readonly JobColumn         _jobColumn         = new() { Label = "Gathering" };
-        private static readonly TypeColumn        _typeColumn        = new() { Label = "Node Type" };
-        private static readonly ExpansionColumn   _expansionColumn   = new() { Label = "Exp." };
-        private static readonly FolkloreColumn    _folkloreColumn    = new() { Label = "Folklore" };
-        private static readonly UptimesColumn     _uptimesColumn     = new() { Label = "Uptimes" };
-        private static readonly BestNodeColumn    _bestNodeColumn    = new() { Label = "Best Node" };
-        private static readonly BestZoneColumn    _bestZoneColumn    = new() { Label = "Best Zone" };
-        private static readonly ItemIdColumn      _itemIdColumn      = new() { Label = "Item Id" };
-        private static readonly GatheringIdColumn _gatheringIdColumn = new() { Label = "G. Id" };
+        private static readonly NameColumn        _nameColumn        = new() { Label = "物品名称" };
+        private static readonly NextUptimeColumn  _nextUptimeColumn  = new() { Label = "下次可采集时间" };
+        private static readonly AetheryteColumn   _aetheryteColumn   = new() { Label = "传送点" };
+        private static readonly LevelColumn       _levelColumn       = new() { Label = "等级" };
+        private static readonly JobColumn         _jobColumn         = new() { Label = "采集方法" };
+        private static readonly TypeColumn        _typeColumn        = new() { Label = "采集点类型" };
+        private static readonly ExpansionColumn   _expansionColumn   = new() { Label = "游戏版本" };
+        private static readonly FolkloreColumn    _folkloreColumn    = new() { Label = "传承录" };
+        private static readonly UptimesColumn     _uptimesColumn     = new() { Label = "可采集时间" };
+        private static readonly BestNodeColumn    _bestNodeColumn    = new() { Label = "采集点" };
+        private static readonly BestZoneColumn    _bestZoneColumn    = new() { Label = "采集地图" };
+        private static readonly ItemIdColumn      _itemIdColumn      = new() { Label = "物品编号" };
+        private static readonly GatheringIdColumn _gatheringIdColumn = new() { Label = "类别内编号" };
 
         private class ItemFilterColumn : ColumnFlags<ItemFilter, ExtendedGatherable>
         {
@@ -145,7 +145,7 @@ public partial class Interface
             {
                 Flags |= ImGuiTableColumnFlags.DefaultSort;
                 SetFlags(ItemFilter.Available, ItemFilter.Unavailable);
-                SetNames("Currently Available", "Currently Unavailable");
+                SetNames("当前可采集", "当前不可采集");
             }
 
             public override void DrawColumn(ExtendedGatherable item, int _)
@@ -166,7 +166,7 @@ public partial class Interface
         private sealed class AetheryteColumn : ColumnString<ExtendedGatherable>
         {
             public override string ToName(ExtendedGatherable item)
-                => item.Uptime.Item1.ClosestAetheryte?.Name ?? "None";
+                => item.Uptime.Item1.ClosestAetheryte?.Name ?? "无";
 
             public override float Width
                 => _closestAetheryteColumnWidth * ImGuiHelpers.GlobalScale;
@@ -176,7 +176,7 @@ public partial class Interface
                 var aetheryte = item.Uptime.Item1.ClosestAetheryte;
                 if (aetheryte == null)
                 {
-                    ImGui.Text("None");
+                    ImGui.Text("无");
                     return;
                 }
 
@@ -279,7 +279,7 @@ public partial class Interface
             {
                 SetFlags(ItemFilter.ARealmReborn, ItemFilter.Heavensward, ItemFilter.Stormblood, ItemFilter.Shadowbringers,
                     ItemFilter.Endwalker);
-                SetNames("A Realm Reborn", "Heavensward", "Stormblood", "Shadowbringers", "Endwalker");
+                SetNames("重生之境（2.0）", "苍穹之禁城（3.0）", "红莲之狂潮（4.0）", "暗影之逆焰（5.0）", "晓月之终途（6.0）");
             }
 
             public override void DrawColumn(ExtendedGatherable item, int _)
@@ -425,10 +425,9 @@ public partial class Interface
 
     private void DrawItemTab()
     {
-        using var id  = ImRaii.PushId("Gatherables");
-        using var tab = ImRaii.TabItem("Gatherables");
-        ImGuiUtil.HoverTooltip("Breaking rocks with a pickaxe or felling trees counts as gathering, why do you ask?\n"
-          + "Find all information about botanist and miner items you could ever need.");
+        using var id  = ImRaii.PushId("矿物/植物");
+        using var tab = ImRaii.TabItem("矿物/植物");
+        ImGuiUtil.HoverTooltip("塔塔露都知道这是采矿工与园艺工可以采集的素材！\n"+ "在这里查找有关矿物与植物的信息。");
         if (!tab)
             return;
 

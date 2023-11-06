@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Dalamud;
 
 namespace GatherBuddy.FishTimer.Parser;
-
+// 标记：汉化需要修改
 public partial class FishingParser
 {
     private readonly struct Regexes
@@ -22,7 +22,7 @@ public partial class FishingParser
                 ClientLanguage.German   => German.Value,
                 ClientLanguage.French   => French.Value,
                 ClientLanguage.Japanese => Japanese.Value,
-                _                       => throw new InvalidEnumArgumentException(),
+                _                       => English.Value,
             };
         }
 
