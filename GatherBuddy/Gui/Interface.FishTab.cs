@@ -85,8 +85,8 @@ public partial class Interface
         private static readonly CollectibleColumn _collectibleColumn = new() { Label = "收藏品" };
         private static readonly PatchColumn       _patchColumn       = new() { Label = "游戏版本" };
         private static readonly FolkloreColumn    _folkloreColumn    = new() { Label = "传承录" };
-        private static readonly BestSpotColumn    _bestSpotColumn    = new() { Label = "钓场" };
-        private static readonly BestZoneColumn    _bestZoneColumn    = new() { Label = "采集地图" };
+        private static readonly BestSpotColumn    _bestSpotColumn    = new() { Label = "最佳钓场" };
+        private static readonly BestZoneColumn    _bestZoneColumn    = new() { Label = "最佳采集地图" };
         private static readonly ItemIdColumn      _itemIdColumn      = new() { Label = "物品编号" };
         private static readonly FishIdColumn      _fishIdColumn      = new() { Label = "类别内编号" };
 

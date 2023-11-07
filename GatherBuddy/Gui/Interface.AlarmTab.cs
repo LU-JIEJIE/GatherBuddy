@@ -335,7 +335,7 @@ public partial class Interface
             }
         }
 
-        if (ImGuiUtil.DrawDisabledButton("创建预设", Vector2.Zero, "将此闹钟组添加为新的采集窗口预设。",
+        if (ImGuiUtil.DrawDisabledButton("创建预设", Vector2.Zero, "将此闹钟组添加为一个新的采集窗口预设。",
                 _alarmCache.Selector.Current == null))
         {
             var preset = new GatherWindowPreset(_alarmCache.Selector.Current!);

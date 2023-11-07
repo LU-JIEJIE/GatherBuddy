@@ -66,8 +66,8 @@ public partial class Interface
         private static readonly ExpansionColumn   _expansionColumn   = new() { Label = "游戏版本" };
         private static readonly FolkloreColumn    _folkloreColumn    = new() { Label = "传承录" };
         private static readonly UptimesColumn     _uptimesColumn     = new() { Label = "可采集时间" };
-        private static readonly BestNodeColumn    _bestNodeColumn    = new() { Label = "采集点" };
-        private static readonly BestZoneColumn    _bestZoneColumn    = new() { Label = "采集地图" };
+        private static readonly BestNodeColumn    _bestNodeColumn    = new() { Label = "最佳采集点" };
+        private static readonly BestZoneColumn    _bestZoneColumn    = new() { Label = "最佳采集地图" };
         private static readonly ItemIdColumn      _itemIdColumn      = new() { Label = "物品编号" };
         private static readonly GatheringIdColumn _gatheringIdColumn = new() { Label = "类别内编号" };
 
