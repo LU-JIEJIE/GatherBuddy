@@ -51,19 +51,19 @@ public partial class Interface
             }
         }
 
-        private static readonly ContentIdHeader  _contentIdHeader  = new() { Label = "Content ID" };
-        private static readonly BaitHeader       _baitHeader       = new() { Label = "Bait" };
-        private static readonly SpotHeader       _spotHeader       = new() { Label = "Fishing Spot" };
-        private static readonly CatchHeader      _catchHeader      = new() { Label = "Caught Fish" };
-        private static readonly CastStartHeader  _castStartHeader  = new() { Label = "TimeStamp" };
-        private static readonly BiteTypeHeader   _biteTypeHeader   = new() { Label = "Tug" };
-        private static readonly HookHeader       _hookHeader       = new() { Label = "Hookset" };
-        private static readonly DurationHeader   _durationHeader   = new() { Label = "Bite" };
-        private static readonly GatheringHeader  _gatheringHeader  = new() { Label = "Gath." };
-        private static readonly PerceptionHeader _perceptionHeader = new() { Label = "Perc." };
-        private static readonly AmountHeader     _amountHeader     = new() { Label = "Amt" };
-        private static readonly SizeHeader       _sizeHeader       = new() { Label = "Ilm" };
-        private static readonly FlagHeader       _flagHeader       = new() { Label = "Flags" };
+        private static readonly ContentIdHeader  _contentIdHeader  = new() { Label = "标识符" };
+        private static readonly BaitHeader       _baitHeader       = new() { Label = "鱼饵" };
+        private static readonly SpotHeader       _spotHeader       = new() { Label = "钓场" };
+        private static readonly CatchHeader      _catchHeader      = new() { Label = "钓起的鱼" };
+        private static readonly CastStartHeader  _castStartHeader  = new() { Label = "时间戳" };
+        private static readonly BiteTypeHeader   _biteTypeHeader   = new() { Label = "竿震" };
+        private static readonly HookHeader       _hookHeader       = new() { Label = "提钩类型" };
+        private static readonly DurationHeader   _durationHeader   = new() { Label = "竿时" };
+        private static readonly GatheringHeader  _gatheringHeader  = new() { Label = "采集力" };
+        private static readonly PerceptionHeader _perceptionHeader = new() { Label = "鉴别力" };
+        private static readonly AmountHeader     _amountHeader     = new() { Label = "数量" };
+        private static readonly SizeHeader       _sizeHeader       = new() { Label = "尺寸" };
+        private static readonly FlagHeader       _flagHeader       = new() { Label = "状态" };
 
         private sealed class GatheringHeader : ColumnString<FishRecord>
         {
@@ -186,7 +186,7 @@ public partial class Interface
                 base.DrawColumn(record, idx);
                 if (ImGui.GetIO().KeyCtrl && ImGui.IsItemClicked(ImGuiMouseButton.Right))
                     _deleteIdx = idx;
-                ImGuiUtil.HoverTooltip("Hold Control and right-click to delete...");
+                ImGuiUtil.HoverTooltip("按住Ctrl键并右键点击以删除。");
             }
         }
 
@@ -479,12 +479,12 @@ public partial class Interface
         {
             var sb = new StringBuilder(Items.Count * 128);
             sb.Append(
-                "Fish\tFishId\tBite\tBait\tBaitId\tSpot\tSpotId\tTug\tHookset\tTimestamp\tEorzea Time\tTransition\tWeather\tAmount\tIlm\tGathering\tPerception\tPatience\tPatience2\tIntuition\tSnagging\tFish Eyes\tChum\tPrize Catch\tIdentical Cast\tSurface Slap\tCollectible\n");
+                "鱼类\t鱼类编号\t竿时\t鱼饵\t鱼饵编号\t钓场\t钓场编号\t竿震\t提钩类型\t时间戳\t艾欧泽亚时间\t之前的天气\t天气\t数量\t尺寸\t采集力\t鉴别力\t耐心\t耐心II\t捕鱼人之识\t钓组\t鱼眼\t撒饵\t大鱼猎手\t专一垂钓\t拍击水面\t收藏品采集\n");
             foreach (var record in Items.OrderBy(r => r.TimeStamp))
             {
                 var (hour, minute) = record.TimeStamp.CurrentEorzeaTimeOfDay();
                 var spot = record.FishingSpot;
-                var (weather, transition) = ("Unknown", "Unknown");
+                var (weather, transition) = ("未知", "未知");
                 if (spot != null)
                 {
                     var weathers = WeatherManager.GetForecast(spot.Territory, 2, record.TimeStamp.AddEorzeaHours(-8));
@@ -532,10 +532,10 @@ public partial class Interface
 
     private void DrawRecordTab()
     {
-        using var id  = ImRaii.PushId("Fish Records");
-        using var tab = ImRaii.TabItem("Fish Records");
-        ImGuiUtil.HoverTooltip("The records of my fishing prowess have been greatly exaggerated.\n"
-          + "Find, cleanup and share all data you have collected while fishing.");
+        using var id  = ImRaii.PushId("钓鱼记录");
+        using var tab = ImRaii.TabItem("钓鱼记录");
+        ImGuiUtil.HoverTooltip("没人能看到你的钓鱼水平？\n"
+          + "在这里记录、清理并分享你所有的钓鱼记录。");
         if (!tab)
             return;
 
@@ -547,23 +547,23 @@ public partial class Interface
         else
             ImGuiUtil.DrawTextButton($"{_recordTable.CurrentItems}", textSize, ImGui.GetColorU32(ImGuiCol.Button));
         ImGui.SameLine();
-        if (ImGui.Button("Cleanup"))
+        if (ImGui.Button("清理"))
         {
             _plugin.FishRecorder.RemoveDuplicates();
             _plugin.FishRecorder.RemoveInvalid();
         }
 
-        ImGuiUtil.HoverTooltip("Delete all entries that were marked as invalid for some reason,\n"
-          + "as well as all entries that have a duplicate (with the same content id and timestamp).\n"
-          + "Usually, there should be none such entries.\n"
-          + "Use at your own risk, no backup will be created automatically.");
+        ImGuiUtil.HoverTooltip("删除所有因某种原因被标记为无效的条目，"
+          + "以及所有相同的条目（标识符与时间戳相同）。\n"
+          + "通常情况下，不会存在这样的条目。\n"
+          + "请谨慎使用该功能，系统并不会自动创建备份。");
 
         ImGui.SameLine();
         try
         {
-            if (ImGui.Button("Copy to Clipboard"))
+            if (ImGui.Button("复制到剪贴板"))
                 ImGui.SetClipboardText(_plugin.FishRecorder.ExportBase64());
-            ImGuiUtil.HoverTooltip("Export all fish records to your clipboard, to share them with other people. This may be a lot");
+            ImGuiUtil.HoverTooltip("将所有钓鱼记录导出到剪贴板，以便与他人分享。这可能会有很多条记录。");
         }
         catch
         {
@@ -573,9 +573,9 @@ public partial class Interface
         ImGui.SameLine();
         try
         {
-            if (ImGui.Button("Import from Clipboard"))
+            if (ImGui.Button("从剪贴板导入"))
                 _plugin.FishRecorder.ImportBase64(ImGui.GetClipboardText());
-            ImGuiUtil.HoverTooltip("Import a set of fish records shared with you from your clipboard. Should automatically skip duplicates.");
+            ImGuiUtil.HoverTooltip("从剪贴板导入他人分享的一组钓鱼记录。会自动跳过重复项。");
         }
         catch
         {
@@ -585,13 +585,13 @@ public partial class Interface
         ImGui.SameLine();
         try
         {
-            if (ImGui.Button("Export JSON"))
+            if (ImGui.Button("导出为JSON文件"))
             {
                 ImGui.OpenPopup(RecordTable.FileNamePopup);
                 WriteJson = true;
             }
 
-            ImGuiUtil.HoverTooltip("Given a path, export all records as a single JSON file.");
+            ImGuiUtil.HoverTooltip("将所有钓鱼记录导出到指定路径下的JSON文件中。");
         }
         catch
         {
@@ -601,13 +601,13 @@ public partial class Interface
         ImGui.SameLine();
         try
         {
-            if (ImGui.Button("Export TSV"))
+            if (ImGui.Button("导出为TSV文件"))
             {
                 ImGui.OpenPopup(RecordTable.FileNamePopup);
                 WriteTsv = true;
             }
 
-            ImGuiUtil.HoverTooltip("Given a path, export all records as a single TSV file.");
+            ImGuiUtil.HoverTooltip("将所有钓鱼记录导出到指定路径下的TSV文件中。");
         }
         catch
         {
@@ -617,11 +617,11 @@ public partial class Interface
         ImGui.SameLine();
         try
         {
-            if (ImGui.Button("Copy Caught Fish JSON"))
+            if (ImGui.Button("复制已钓起鱼类的JSON语句"))
             {
                 var logFish = GatherBuddy.GameData.Fishes.Values.Where(f => f.InLog && f.FishingSpots.Count > 0).ToArray();
                 var ids     = logFish.Where(f => GatherBuddy.FishLog.IsUnlocked(f)).Select(f => f.ItemId).ToArray();
-                Communicator.PrintClipboardMessage("List of ", $"{ids.Length}/{logFish.Length} caught fish ");
+                Communicator.PrintClipboardMessage("已钓起鱼类列表 ", $"{ids.Length}/{logFish.Length} ");
                 ImGui.SetClipboardText(JsonConvert.SerializeObject(ids, Formatting.Indented));
             }
         }
@@ -655,11 +655,11 @@ public partial class Interface
             {
                 var data = _recordTable.CreateTsv();
                 File.WriteAllText(name, data);
-                GatherBuddy.Log.Information($"Exported {_recordTable.TotalItems} fish records to {name}.");
+                GatherBuddy.Log.Information($"导出 {_recordTable.TotalItems} 条钓鱼记录到文件 {name}.");
             }
             catch (Exception e)
             {
-                GatherBuddy.Log.Warning($"Could not export tsv file to {name}:\n{e}");
+                GatherBuddy.Log.Warning($"无法导出到TSV文件 {name}：\n{e}");
             }
 
             WriteTsv = false;

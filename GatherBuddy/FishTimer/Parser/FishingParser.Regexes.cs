@@ -22,12 +22,19 @@ public partial class FishingParser
                 ClientLanguage.German   => German.Value,
                 ClientLanguage.French   => French.Value,
                 ClientLanguage.Japanese => Japanese.Value,
-                _                       => English.Value,
+                _                       => Chinese.Value,
             };
         }
 
         // @formatter:off
-
+        // 将新钓场“利姆萨·罗敏萨上层甲板”记录到了钓鱼笔记中！
+        private static readonly Lazy<Regexes> Chinese = new( () => new Regexes
+        {
+            Cast           = new Regex(@".+?在(?<FishingSpot>.+?)甩出了鱼线开始钓鱼。", RegexOptions.Compiled | RegexOptions.NonBacktracking | RegexOptions.ExplicitCapture),
+            AreaDiscovered = new Regex(@"将新钓场“(?<FishingSpot>.+)”记录到了钓鱼笔记中！",                   RegexOptions.Compiled | RegexOptions.NonBacktracking | RegexOptions.ExplicitCapture),
+            Mooch          = new Regex(@"尝试以小钓大。",                                               RegexOptions.Compiled | RegexOptions.NonBacktracking | RegexOptions.ExplicitCapture),
+            Undiscovered   = "未知钓场",
+        });
 
         private static readonly Lazy<Regexes> English = new( () => new Regexes
         {
