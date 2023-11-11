@@ -407,7 +407,7 @@ public partial class Interface
 
         var       holdingCtrl = ImGui.GetIO().KeyCtrl;
         using var color       = ImRaii.PushColor(ImGuiCol.ButtonHovered, 0x8000A000, holdingCtrl);
-        if (ImGui.Button("Restore Default Groups") && holdingCtrl && _plugin.GatherGroupManager.SetDefaults(true))
+        if (ImGui.Button("还原默认分组") && holdingCtrl && _plugin.GatherGroupManager.SetDefaults(true))
         {
             _gatherGroupCache.Selector.TryRestoreCurrent();
             _plugin.GatherGroupManager.Save();
